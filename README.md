@@ -25,6 +25,7 @@
 ```sh
 git clone https://github.com/santiagodsgnr/unity-converter-roadmap.git
 cd unity-converter-roadmap
+```
 
 ### 🛠️ Technologies Used
 🔹 React - UI library
@@ -40,3 +41,4 @@ The app communicates with a local API to process conversions.
 📡 Endpoint:
 ```sh
 POST http://localhost:3000/api/conversions
+```
