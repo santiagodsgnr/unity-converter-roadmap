@@ -6,6 +6,7 @@ body {
   background-color: #020617;
   color: #ffffff;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .container {
@@ -13,27 +14,6 @@ body {
   width: 100%;
   height: 100%;
   background-color: #020617; /* bg-slate-950 */
-}
-
-.gradient-circle {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle farthest-side, rgba(255, 0, 182, 0.15), rgba(255, 255, 255, 0));
-}
-
-.gradient-circle.left {
-  top: -10%;
-  left: -20%;
-  bottom: 0;
-  right: 0;
-}
-
-.gradient-circle.right {
-  top: -10%;
-  right: -20%;
-  bottom: 0;
 }
 
 /* Contenedor principal */
@@ -189,7 +169,7 @@ body {
 .conversion-section {
   display: flex;
   flex-direction: column;
-  position: relative; /* Añadido para el posicionamiento absoluto del botón */
+  gap: 15px;
 }
 
 .section-label {
@@ -204,8 +184,6 @@ body {
   border-radius: 12px;
   padding: 12px 16px;
   align-items: center;
-  position: relative;
-  margin-bottom: 16px; /* Añadir espacio para el botón */
 }
 
 .unit-select {
@@ -381,11 +359,8 @@ body {
 }
 
 .swap-icon-container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  display: flex;
+  justify-content: center;
 }
 
 .swap-direction-button {
@@ -400,6 +375,7 @@ body {
   color: #a5b4fc;
   transition: all 0.3s ease;
 }
+
 
 .swap-direction-button {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
