@@ -7,7 +7,7 @@ const { Title } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
 
-const API_BASE_URL = process.env.VITE_API_BASE_URL || "http://localhost:3000";
+const API_BASE_URL = process.env.VITE_API_BASE_URL;
 
 
 function App() {
