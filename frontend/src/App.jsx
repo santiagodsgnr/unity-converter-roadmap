@@ -7,6 +7,9 @@ const { Title } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+
+
 function App() {
   const getOptionsByType = (type) => {
     const options = {
@@ -41,11 +44,12 @@ function App() {
       isLoading: false,
     });
   };
+  
 
   const handleConvert = async () => {
     setState((prev) => ({ ...prev, isLoading: true }));
     try {
-      const { data } = await axios.post("https://unity-converter-roadmap-backend.vercel.app/api/conversions", {
+      const { data } = await axios.post(`${API_BASE_URL}/api/conversions`, {
         value: Number(state.value),
         from: state.from,
         to: state.to,
