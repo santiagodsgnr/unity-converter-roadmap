@@ -1,7 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import { Card, Select, Input, Button, Tabs, Typography, Spin } from "antd";
-import { SwapOutlined, ReloadOutlined, ArrowDownOutlined } from "@ant-design/icons";
+import {
+  SwapOutlined,
+  ReloadOutlined,
+  ArrowDownOutlined,
+} from "@ant-design/icons";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -9,11 +13,19 @@ const { TabPane } = Tabs;
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-
 function App() {
   const getOptionsByType = (type) => {
     const options = {
-      length: ["millimeter", "centimeter", "meter", "kilometer", "inch", "foot", "yard", "mile"],
+      length: [
+        "millimeter",
+        "centimeter",
+        "meter",
+        "kilometer",
+        "inch",
+        "foot",
+        "yard",
+        "mile",
+      ],
       weight: ["milligram", "gram", "kilogram", "ounce", "pound"],
       temperature: ["celsius", "fahrenheit", "kelvin"],
     };
@@ -38,13 +50,12 @@ function App() {
     setState({
       value: "",
       type: newType,
-      from: options[0], 
-      to: options[1] || options[0], 
+      from: options[0],
+      to: options[1] || options[0],
       result: null,
       isLoading: false,
     });
   };
-  
 
   const handleConvert = async () => {
     setState((prev) => ({ ...prev, isLoading: true }));
@@ -62,122 +73,168 @@ function App() {
     }
   };
 
+  const handleSwapUnits = () => {
+    setState((prev) => ({ ...prev, from: prev.to, to: prev.from }));
+  };
+
+  // Función para obtener la primera letra de la unidad (para el círculo)
+  const getUnitInitial = (unit) => {
+    return unit.charAt(0).toUpperCase();
+  };
+
   return (
-    <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, padding: 20 }}>
-      <Card
-        style={{
-          width: 400,
-          textAlign: "center",
-          borderRadius: "10px",
-          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-          background: "#f9f9f9",
-        }}
-      >
-        <Title level={3} style={{ marginBottom: 10 }}>
-          Unit Converter
-        </Title>
+    <div className="app-container">
+      <div class="container">
+        <div class="gradient-circle left"></div>
+        <div class="gradient-circle right"></div>
+      </div>
 
-        <Tabs activeKey={state.type} onChange={handleTypeChange} size="large">
-          <TabPane tab="Length" key="length" />
-          <TabPane tab="Weight" key="weight" />
-          <TabPane tab="Temperature" key="temperature" />
-        </Tabs>
+      <div className="header">
+        <div className="logo">UnitConvert</div>
+        <div className="account-info">
+          <Button type="primary" className="connect-button">
+            View Github
+          </Button>
+        </div>
+      </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <Input
-            size="large"
-            placeholder="Enter value"
-            value={state.value}
-            onChange={(e) => handleChange("value", e.target.value)}
-            style={{ borderRadius: "8px" }}
-          />
-
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <Select
-              size="large"
-              value={state.from}
-              onChange={(value) => handleChange("from", value)}
-              style={{ flex: 1 }}
-            >
-              {getOptionsByType(state.type).map((unit) => (
-                <Option key={unit} value={unit}>
-                  {unit.charAt(0).toUpperCase() + unit.slice(1)}
-                </Option>
-              ))}
-            </Select>
-            
-            <ArrowDownOutlined style={{ fontSize: "20px", color: "#1890ff" }} />
-
-            <Select
-              size="large"
-              value={state.to}
-              onChange={(value) => handleChange("to", value)}
-              style={{ flex: 1 }}
-            >
-              {getOptionsByType(state.type).map((unit) => (
-                <Option key={unit} value={unit}>
-                  {unit.charAt(0).toUpperCase() + unit.slice(1)}
-                </Option>
-              ))}
-            </Select>
+      <div className="content-container">
+        <div className="converter-card">
+          <div className="card-header">
+            <h2>Convert</h2>
+            <Button
+              onClick={() =>
+                setState({
+                  value: "",
+                  type: "length",
+                  from: "meter",
+                  to: "kilometer",
+                  result: null,
+                  isLoading: false,
+                })
+              }
+              icon={<ReloadOutlined />}
+              type="text"
+              className="settings-button"
+            />
           </div>
 
+          <Tabs
+            activeKey={state.type}
+            onChange={handleTypeChange}
+            className="custom-tabs"
+          >
+            <TabPane tab="Length" key="length" />
+            <TabPane tab="Weight" key="weight" />
+            <TabPane tab="Temperature" key="temperature" />
+          </Tabs>
+
+          <div className="conversion-section">
+            <div className="input-with-select">
+              <div className="unit-select">
+                <Select
+                  value={state.from}
+                  onChange={(value) => handleChange("from", value)}
+                  className="unit-dropdown"
+                  dropdownClassName="dark-dropdown"
+                  suffixIcon={<ArrowDownOutlined />}
+                  dropdownMatchSelectWidth={false}
+                >
+                  {getOptionsByType(state.type).map((unit) => (
+                    <Option key={unit} value={unit}>
+                      <div className="unit-option">
+                        <div className="unit-icon">{getUnitInitial(unit)}</div>
+                        <span className="unit-name">
+                          {unit.charAt(0).toUpperCase() + unit.slice(1)}
+                        </span>
+                      </div>
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+              <Input
+                className="value-input"
+                placeholder="0"
+                value={state.value}
+                onChange={(e) => handleChange("value", e.target.value)}
+                bordered={false}
+              />
+            </div>
+
+            <div className="swap-icon-container">
+              <Button
+                className="swap-direction-button"
+                icon={<SwapOutlined />}
+                onClick={handleSwapUnits}
+              />
+            </div>
+
+            <div className="input-with-select">
+              <div className="unit-select">
+                <Select
+                  value={state.to}
+                  onChange={(value) => handleChange("to", value)}
+                  className="unit-dropdown"
+                  dropdownClassName="dark-dropdown"
+                  suffixIcon={<ArrowDownOutlined />}
+                  dropdownMatchSelectWidth={false}
+                >
+                  {getOptionsByType(state.type).map((unit) => (
+                    <Option key={unit} value={unit}>
+                      <div className="unit-option">
+                        <div className="unit-icon">{getUnitInitial(unit)}</div>
+                        <span className="unit-name">
+                          {unit.charAt(0).toUpperCase() + unit.slice(1)}
+                        </span>
+                      </div>
+                    </Option>
+                  ))}
+                </Select>
+              </div>
+              <div className="result-container">
+                {state.isLoading ? (
+                  <Spin className="result-spinner" />
+                ) : (
+                  <div
+                    className={`result-value ${
+                      state.result !== null ? "has-result" : ""
+                    }`}
+                  >
+                    {state.result !== null ? state.result : "0"}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          {state.result !== null && (
+            <div className="result-summary">
+              <div className="result-card">
+                <div className="result-title">Conversion Result</div>
+                <div className="result-equation">
+                  <span className="source-value">{state.value}</span>
+                  <span className="source-unit">{state.from}</span>
+                  <span className="equals-sign">=</span>
+                  <span className="target-value">{state.result}</span>
+                  <span className="target-unit">{state.to}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
           <Button
-            type="primary"
+            className="convert-button"
             size="large"
             onClick={handleConvert}
             disabled={!state.value}
             loading={state.isLoading}
-            style={{
-              transition: "all 0.2s ease-in-out",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "5px",
-            }}
           >
-            <SwapOutlined />
             Convert
           </Button>
         </div>
-      </Card>
-
-      {state.result !== null && (
-        <Card
-          style={{
-            width: 400,
-            textAlign: "center",
-            borderRadius: "10px",
-            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-            background: "#f9f9f9",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            padding: 20,
-          }}
-        >
-          <Title level={4}>Result</Title>
-          <p style={{ fontSize: "20px", margin: "0" }}>
-            {`${state.value} ${state.from} = ${state.result} ${state.to}`}
-          </p>
-          <Button
-            danger
-            size="large"
-            onClick={() => handleChange("result", null)}
-            style={{
-              marginTop: "15px",
-              transition: "all 0.2s ease-in-out",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "5px",
-            }}
-          >
-            <ReloadOutlined />
-            Reset
-          </Button>
-        </Card>
-      )}
+      </div>
+      <div className="footer">
+        <p className="footer-text">Unit Converter by Santiago Ardila</p>
+      </div>
     </div>
   );
 }

@@ -1,9 +1,548 @@
+/* Estilos globales */
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #020617;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #020617; /* bg-slate-950 */
+}
+
+.gradient-circle {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle farthest-side, rgba(255, 0, 182, 0.15), rgba(255, 255, 255, 0));
+}
+
+.gradient-circle.left {
+  top: -10%;
+  left: -20%;
+  bottom: 0;
+  right: 0;
+}
+
+.gradient-circle.right {
+  top: -10%;
+  right: -20%;
+  bottom: 0;
+}
+
+/* Contenedor principal */
+.app-container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding: 10px 0;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 0, 182, 0.5);
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 0, 182, 0.1);
+}
+
+.nav-item.active {
+  background-color: rgba(255, 0, 182, 0.2);
+}
+
+.connect-button {
+  background: linear-gradient(90deg, #ff00b6 0%, #9500ff 100%);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 4px 16px;
+  height: auto;
+}
+
+.connect-button:hover {
+  opacity: 0.9;
+  background: linear-gradient(90deg, #ff00b6 0%, #9500ff 100%);
+  color: white;
+}
+
+/* Contenedor de contenido */
+.content-container {
   display: flex;
   justify-content: center;
+  padding: 20px 0;
+}
+
+/* Tarjeta del convertidor */
+.converter-card {
+  background-color: rgba(15, 23, 42, 0.7);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 0, 182, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  height: 100vh;
+  margin-bottom: 20px;
+}
+
+.card-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.settings-button {
+  color: #a5b4fc;
+  background: transparent;
+  border: none;
+}
+
+/* Tabs personalizados */
+.custom-tabs .ant-tabs-nav {
+  margin-bottom: 20px;
+}
+
+/* Borde inferior de la barra de tabs */
+:where(.css-dev-only-do-not-override-240cud).ant-tabs-top > .ant-tabs-nav::before,
+.ant-tabs-top > .ant-tabs-nav::before {
+  border-bottom: 1px solid rgba(255, 0, 182, 0.1) !important;
+}
+
+/* Estilo de los tabs */
+.custom-tabs .ant-tabs-tab {
+  color: #a5b4fc;
+  padding: 8px 16px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+/* Hover de los tabs */
+.custom-tabs .ant-tabs-tab:hover {
+  color: #ff00b6 !important;
+}
+
+/* Tab activo */
+.custom-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #ffffff !important;
+  text-shadow: 0 0 10px rgba(255, 0, 182, 0.3);
+}
+
+/* Línea indicadora del tab activo */
+.custom-tabs .ant-tabs-ink-bar {
+  background: linear-gradient(90deg, #ff00b6 0%, #9500ff 100%) !important;
+  height: 2px !important;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255, 0, 182, 0.5);
+}
+
+/* Ajuste del espacio inferior de los tabs */
+.custom-tabs .ant-tabs-nav {
+  margin-bottom: 40px;
+}
+
+/* Eliminar el outline al hacer focus */
+.custom-tabs .ant-tabs-tab-btn:focus,
+.custom-tabs .ant-tabs-tab-remove:focus,
+.custom-tabs .ant-tabs-tab-btn:active,
+.custom-tabs .ant-tabs-tab-remove:active {
+  color: #ff00b6 !important;
+}
+/* Sección de conversión */
+.conversion-section {
+  display: flex;
+  flex-direction: column;
+  position: relative; /* Añadido para el posicionamiento absoluto del botón */
+}
+
+.section-label {
+  color: #a5b4fc;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.input-with-select {
+  display: flex;
+  background-color: rgba(15, 23, 42, 0.8);
+  border-radius: 12px;
+  padding: 12px 16px;
+  align-items: center;
+  position: relative;
+  margin-bottom: 16px; /* Añadir espacio para el botón */
+}
+
+.unit-select {
+  min-width: 120px;
+}
+
+.unit-dropdown {
+  background: transparent !important;
+  border: none !important;
+  color: #ffffff !important;
+}
+
+.unit-dropdown .ant-select-selector {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  height: auto !important;
+}
+
+.unit-dropdown .ant-select-selection-item {
+  color: #ffffff !important;
+  font-weight: 500;
+  padding-right: 20px !important; /* Espacio para el icono de flecha */
+}
+
+.unit-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 4px;
+  white-space: nowrap;
+  min-width: 150px; /* Ancho mínimo para evitar cortes */
+}
+
+.unit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #ff00b6;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  flex-shrink: 0; /* Evita que el círculo se deforme */
+}
+
+.unit-name {
+  font-size: 16px;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.value-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  text-align: right;
+  padding-right: 8px;
+}
+
+.value-input::placeholder {
+  color: #a5b4fc;
+}
+
+.value-input:focus {
+  box-shadow: none;
+}
+
+/* Estilos para el resultado */
+.result-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.result-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #a5b4fc;
+  text-align: right;
+  transition: all 0.3s ease;
+}
+
+.result-value.has-result {
+  color: #ff00b6;
+  text-shadow: 0 0 15px rgba(255, 0, 182, 0.5);
+  animation: pulse 1.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.result-spinner {
+  margin-right: 10px;
+}
+
+/* Resumen del resultado */
+.result-summary {
+  margin-top: 8px;
+}
+
+.result-card {
+  background: linear-gradient(135deg, rgba(149, 0, 255, 0.1) 0%, rgba(255, 0, 182, 0.1) 100%);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 0, 182, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.result-title {
+  font-size: 14px;
+  color: #a5b4fc;
+  margin-bottom: 8px;
+}
+
+.result-equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 18px;
+}
+
+.source-value, .target-value {
+  font-weight: 600;
+}
+
+.source-unit, .target-unit {
+  color: #a5b4fc;
+  font-size: 16px;
+}
+
+.equals-sign {
+  margin: 0 8px;
+  color: #a5b4fc;
+}
+
+.target-value {
+  color: #ff00b6;
+  font-size: 22px;
+  text-shadow: 0 0 10px rgba(255, 0, 182, 0.5);
+}
+
+.max-button {
+  background-color: rgba(255, 0, 182, 0.1);
+  border: none;
+  color: #a5b4fc;
+  border-radius: 8px;
+  padding: 2px 8px;
+  height: auto;
+  font-size: 12px;
+}
+
+.max-button:hover {
+  background-color: rgba(255, 0, 182, 0.2);
+  color: #ffffff;
+}
+
+.swap-icon-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.swap-direction-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px !important;
+  height: 46px;
+  border-radius: 50%;
+  background-color: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 0, 182, 0.2);
+  color: #a5b4fc;
+  transition: all 0.3s ease;
+}
+
+.swap-direction-button {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Mejorar el efecto hover */
+.swap-direction-button:hover {
+  background: linear-gradient(90deg, #ff00b6 0%, #9500ff 100%) !important;
+  color: white !important;
+  box-shadow: 0 0 15px rgba(255, 0, 182, 0.5);
+  transform: scale(1.05);
+}
+
+.conversion-rate {
+  text-align: center;
+  color: #a5b4fc;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.convert-button {
+  background: linear-gradient(90deg, #ff00b6 0%, #9500ff 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 500;
+  height: 48px;
+  margin-top: 16px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.convert-button:hover {
+  opacity: 0.9;
+  background: linear-gradient(90deg, #ff00b6 0%, #9500ff 100%);
+  color: white;
+  box-shadow: 0 0 15px rgba(255, 0, 182, 0.5);
+}
+
+.convert-button:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: #a5b4fc;
+  opacity: 0.7;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  color: #a5b4fc;
+  font-size: 14px;
+}
+
+.footer-text {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Estilos para el dropdown oscuro */
+.dark-dropdown {
+  background-color: #0f172a !important;
+  border: 1px solid rgba(255, 0, 182, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 8px 4px !important;
+  min-width: 180px !important; /* Ancho mínimo para el dropdown */
+}
+
+.dark-dropdown .ant-select-item {
+  color: #ffffff !important;
+  padding: 8px 12px !important;
+}
+
+.dark-dropdown .ant-select-item-option-active,
+.dark-dropdown .ant-select-item-option-selected {
+  background-color: rgba(255, 0, 182, 0.1) !important;
+}
+
+/* Ajustes para Ant Design */
+.ant-select-dropdown {
+  background-color: #0f172a !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 0, 182, 0.1) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.ant-select-item {
+  color: #ffffff !important;
+}
+
+.ant-select-item-option-content {
+  white-space: nowrap !important;
+  overflow: visible !important;
+}
+
+.ant-select-item-option-active,
+.ant-select-item-option-selected {
+  background-color: rgba(255, 0, 182, 0.1) !important;
+}
+
+.ant-input-disabled {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  opacity: 0.8;
+}
+
+/* Ajustes específicos para el dropdown */
+.ant-select-dropdown-placement-bottomLeft {
+  min-width: 180px !important;
+}
+
+.ant-select-item-option {
+  padding: 8px 12px !important;
+}
+
+/* Estilos para el spinner de Ant Design */
+.ant-spin-dot-item {
+  background-color: #ff00b6 !important;
+}
+
+/* Cambiar el color de la flecha del select */
+.ant-select-suffix .anticon-down svg {
+  fill: #ff00b6 !important;
+}
+
+.ant-select-suffix .anticon {
+  color: #ff00b6 !important;
+}
+
+/* Para cuando el select está abierto (flecha hacia arriba) */
+.ant-select-open .ant-select-suffix .anticon-down svg {
+  fill: #ff00b6 !important;
+}
+
+/* Para el hover */
+.ant-select:hover .ant-select-suffix .anticon-down svg {
+  fill: #ff00b6 !important;
+}
+
+/* Asegurar que el icono personalizado tenga el color correcto */
+.unit-dropdown .ant-select-arrow {
+  color: #ff00b6 !important;
+}
+
+/* Ajustar la posición del icono si es necesario */
+.unit-dropdown .ant-select-arrow {
+  right: 11px;
 }
